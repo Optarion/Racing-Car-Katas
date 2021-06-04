@@ -9,18 +9,17 @@ Alarm = function() {
 
 Alarm.prototype = {
 
-	check: function() {
-		var psiPressureValue = this._sensor.popNextPressurePsiValue();
-
-		if (psiPressureValue < this._lowPressureThreshold || this._highPressureThreshold < psiPressureValue) {
-			this._alarmOn = true;
-		}
+	check: function(psiPressureValue) {
+		this._alarmOn = this.shouldTriggerAlarm(psiPressureValue);
 	},
 
 	alarmOn: function() {
 		return this._alarmOn;
-	}
+	},
 
+	shouldTriggerAlarm: function(psiPressureValue) {
+		return psiPressureValue < this._lowPressureThreshold || this._highPressureThreshold < psiPressureValue
+	}
 };
 
 module.exports = Alarm;
